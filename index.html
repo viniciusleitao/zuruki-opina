@@ -79,14 +79,9 @@
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
   <script>
-
-    var randomizer = function(upTo) {
-      return Math.floor(Math.random() * upTo);
-    }
-
     function Phrases() {
       var PhrasesInit = function() {
-        this.phrases = [
+        this.phrases = this.collection = [
           {
             preffix: "+1",
             suffix: "!",
@@ -114,13 +109,10 @@
           }
         ];
 
-        this.next = function() {
-          var idx = randomizer(this.phrases.length)
-          return this.phrases[idx]
-        }
+        var randomPhrase = new Chooser(this)
 
         this.phraseFor = function(subject) {
-          var phrase = this.next()
+          var phrase = randomPhrase.next()
           var newPhrase = phrase.preffix
           if(phrase.concat)
             newPhrase = newPhrase + subject
@@ -131,19 +123,24 @@
       return new PhrasesInit();
     }
 
+    function Chooser(collectionHolder) {
+      var collection = collectionHolder.collection
+      return {
+        next: function() {
+          var random = Math.floor(Math.random() * collection.length);
+          return collection[random]
+        }
+      }
+    }
+
     function Background() {
       var BgInit = function() {
-        this.backgrounds = [
+        this.backgrounds = this.collection = [
           "bg0.jpg",
           "bg1.jpg",
           "bg2.jpg",
           "bg3.jpg",
         ]
-
-        this.next = function() {
-          var idx = randomizer(this.backgrounds.length)
-          return this.backgrounds[idx]
-        }
       }
       return new BgInit();
     }
@@ -151,8 +148,9 @@
     function Opinator($scope) {
       var background = new Background()
       var phrases = new Phrases()
+      var bgChooser = new Chooser(background)
 
-      $scope.randomBackground = background.next()
+      $scope.randomBackground = bgChooser.next()
 
       $scope.canShowCurrentOpinion = function() {
         return $scope.currentOpinion &&
