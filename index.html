@@ -123,14 +123,6 @@ function Phrases() {
   return new PhrasesInit();
 }
 
-Phrases.Phrase = function() {
-  return {
-    prefix: prefix,
-    suffix: suffix,
-    concat: concat
-  }
-}
-
 function Chooser(collectionHolder) {
   var collection = collectionHolder.collection
   return {
