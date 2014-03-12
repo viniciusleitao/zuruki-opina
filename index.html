@@ -61,7 +61,7 @@
 </head>
 <body>
   <div id="main" ng-controller="Opinator">
-    <h1>Monte você mesmo um texto com a opinião do Zuruki</h1>
+    <h1>O que será que o Zuruki acha de:</h1>
     <form ng-submit="newSubject()">
       <input type="text" ng-model="subject"
         placeholder="Digite sobre o que você quer que ele opine" />
@@ -105,6 +105,16 @@ function Phrases() {
       {
         preffix: "",
         suffix: "? Não sei o que é isso.",
+        concat: true,
+      }
+      {
+        preffix: "",
+        suffix: " é importante sabe",
+        concat: true,
+      }
+      {
+        preffix: "",
+        suffix: " do Dr. Leão?",
         concat: true,
       }
     ];
